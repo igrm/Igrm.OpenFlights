@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29201.188
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Igrm.OpenFlights", "Igrm.OpenFlights\Igrm.OpenFlights.csproj", "{D0A89156-0640-45B4-A7F9-342A8539BE04}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D0A89156-0640-45B4-A7F9-342A8539BE04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0A89156-0640-45B4-A7F9-342A8539BE04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0A89156-0640-45B4-A7F9-342A8539BE04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0A89156-0640-45B4-A7F9-342A8539BE04}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A09CDF72-C292-4355-99FB-42E8C5B6DC71}
+	EndGlobalSection
+EndGlobal
