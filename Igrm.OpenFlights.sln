@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29201.188
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Igrm.OpenFlights", "Igrm.OpenFlights\Igrm.OpenFlights.csproj", "{D0A89156-0640-45B4-A7F9-342A8539BE04}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Igrm.OpenFlights", "Igrm.OpenFlights\Igrm.OpenFlights.csproj", "{D0A89156-0640-45B4-A7F9-342A8539BE04}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Igrm.OpenFlights.Tests", "Igrm.OpenFlights.Tests\Igrm.OpenFlights.Tests.csproj", "{79655BF4-26B4-4C07-8A8D-13B83690B64D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{D0A89156-0640-45B4-A7F9-342A8539BE04}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D0A89156-0640-45B4-A7F9-342A8539BE04}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D0A89156-0640-45B4-A7F9-342A8539BE04}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79655BF4-26B4-4C07-8A8D-13B83690B64D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79655BF4-26B4-4C07-8A8D-13B83690B64D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79655BF4-26B4-4C07-8A8D-13B83690B64D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79655BF4-26B4-4C07-8A8D-13B83690B64D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
