@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Igrm.OpenFlights.Interfaces
 {
-    class ICache
+    public interface ICache<T>
     {
+        Task<T> GetAsync();
+        Task SetAsync(T value);
     }
 }
