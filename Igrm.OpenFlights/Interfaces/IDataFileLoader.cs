@@ -7,7 +7,7 @@ namespace Igrm.OpenFlights.Interfaces
 {
     public interface IDataFileLoader
     {
-        Task<bool> FileExists(string name);
+        bool FileExists(string name);
         Task LoadFileAsync<T>(bool overwrite=false);
         Task LoadAllFilesAsync(bool overwrite = false);
     }
