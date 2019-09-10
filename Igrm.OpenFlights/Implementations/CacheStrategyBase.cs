@@ -10,10 +10,12 @@ namespace Igrm.OpenFlights.Implementations
     public class CacheStrategyBase<T> : ICacheStrategy<T> where T : class
     {
         protected readonly IMemoryCache _memoryCache;
+        protected readonly MemoryCacheEntryOptions _memoryCacheEntryOptions;
 
-        public CacheStrategyBase(IMemoryCache  memoryCache)
+        public CacheStrategyBase(IMemoryCache  memoryCache, MemoryCacheEntryOptions memoryCacheEntryOptions)
         {
             _memoryCache = memoryCache;
+            _memoryCacheEntryOptions = memoryCacheEntryOptions;
         }
 
         public void Dispose()
@@ -29,7 +31,7 @@ namespace Igrm.OpenFlights.Implementations
 
         public Task ExecuteSetAsyn(T value, string key)
         {
-            return Task.Run(()=>_memoryCache.Set<T>(key, value));    
+            return Task.Run(()=>_memoryCache.Set<T>(key, value, _memoryCacheEntryOptions));    
         }
     }
 }
