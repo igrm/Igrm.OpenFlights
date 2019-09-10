@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using Igrm.OpenFlights.Exceptions;
 using Igrm.OpenFlights.Models;
+using Igrm.OpenFlights.Helpers;
 
 namespace Igrm.OpenFlights.Implementations
 {
@@ -50,7 +51,7 @@ namespace Igrm.OpenFlights.Implementations
 
         public async Task LoadFileAsync<T>(bool overwrite = false)
         {
-            var attributes = GetAttributeData<T>();
+            var attributes = GeneralHelper.GetAttributeData<T>();
 
             if (String.IsNullOrEmpty(attributes.fileName) && String.IsNullOrEmpty(attributes.uri) 
                 && !Uri.IsWellFormedUriString(attributes.uri, UriKind.Absolute))
@@ -67,18 +68,6 @@ namespace Igrm.OpenFlights.Implementations
                 File.WriteAllText($@"{_tempPath}\{OpenFligthsConstants.TEMP_DIRECTORY_NAME}\{attributes.fileName}",await result.Content.ReadAsStringAsync());
             }
 
-        }
-
-        private (string cacheKey, string fileName, string uri) GetAttributeData<T>()
-        {
-            MemberInfo memberInfo = typeof(T);
-            FileCacheAttribute attribute = memberInfo.GetCustomAttributes(true)
-                                                      .Where(x=>x.GetType() == typeof(FileCacheAttribute))
-                                                      .FirstOrDefault() as FileCacheAttribute;
-            if (attribute!=null)
-                return (cacheKey: attribute.CacheKey, fileName: attribute.FileName, uri: attribute.Uri);
-
-            return (cacheKey: String.Empty, fileName: String.Empty, uri: String.Empty);
         }
     }
 }
