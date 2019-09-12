@@ -19,11 +19,12 @@ namespace Igrm.OpenFlights
         public OpenFlightsDataCache(HttpClient httpClient)
         {
             IDataFileLoader dataFileLoader = new DataFileLoader(httpClient);
-
+            Task t = dataFileLoader.LoadAllFilesAsync();
             _airportRepository = new RepositoryBase<AirportsList, Airport>(dataFileLoader);
             _aircraftRepository = new RepositoryBase<AircraftsList, Aircraft>(dataFileLoader);
             _routeRepository = new RepositoryBase<RoutesList, Route>(dataFileLoader);
             _airlineRepository = new RepositoryBase<AirlineList, Airline>(dataFileLoader);
+            t.Wait();
         }
 
         public async Task<AircraftsList>  GetAircraftsAsync()
