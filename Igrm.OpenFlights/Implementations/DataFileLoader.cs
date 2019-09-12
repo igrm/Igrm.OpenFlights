@@ -43,10 +43,10 @@ namespace Igrm.OpenFlights.Implementations
                 Directory.CreateDirectory($@"{_tempPath}\{OpenFligthsConstants.TEMP_DIRECTORY_NAME}");
             }
 
-            return Task.WhenAll(LoadFileAsync<Aircraft>(overwrite), 
-                                LoadFileAsync<Airline>(overwrite), 
-                                LoadFileAsync<Airport>(overwrite), 
-                                LoadFileAsync<Route>(overwrite) );
+            return Task.WhenAll(LoadFileAsync<AircraftsList>(overwrite), 
+                                LoadFileAsync<AirlineList>(overwrite), 
+                                LoadFileAsync<AirportsList>(overwrite), 
+                                LoadFileAsync<RoutesList>(overwrite) );
         }
 
         public async Task LoadFileAsync<T>(bool overwrite = false)
@@ -76,7 +76,7 @@ namespace Igrm.OpenFlights.Implementations
 
             if (FileExists(name))
             {
-                lines = File.ReadAllLines(name).Select(x => x.Split(',')).ToList();
+                lines = File.ReadAllLines($@"{_tempPath}\{OpenFligthsConstants.TEMP_DIRECTORY_NAME}\{name}").Select(x => x.Split(',')).ToList();
             }
             else
             {

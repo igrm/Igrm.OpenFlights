@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace Igrm.OpenFlights.Implementations
 {
-    public class RepositoryBase<T, U> : IRepositoryBase<T, U> where T: List<U> where U: class
+    public class RepositoryBase<T, U> : IRepositoryBase<T, U> where T: List<U>, new() where U: class 
     {
         private readonly ICache<T> _cache;
         private readonly IDataFileLoader _dataFileLoader;
@@ -27,7 +27,8 @@ namespace Igrm.OpenFlights.Implementations
             if(result == null)
             {
                 var list = _dataFileLoader.ReadFile(GeneralHelper.GetAttributeData<T>().fileName);
-                result = Convert(list);
+                result = new T();
+                result.AddRange(Convert(list));
                 await _cache.SetAsync(result);
             }
             return result;
@@ -39,9 +40,9 @@ namespace Igrm.OpenFlights.Implementations
             return result.Where(expression).ToList() as T;
         }
 
-        private T Convert(List<string[]> list)
+        private List<U> Convert(List<string[]> list)
         {
-            return list.Select(x => x as U).ToList() as T;
+            return list.Select(x => x as U).ToList();
         }
     }
 }
