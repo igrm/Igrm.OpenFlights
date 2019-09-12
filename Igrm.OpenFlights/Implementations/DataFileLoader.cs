@@ -69,5 +69,20 @@ namespace Igrm.OpenFlights.Implementations
             }
 
         }
+
+        public List<string[]> ReadFile(string name)
+        {
+            List<string[]> lines = new List<string[]>();
+
+            if (FileExists(name))
+            {
+                lines = File.ReadAllLines(name).Select(x => x.Split(',')).ToList();
+            }
+            else
+            {
+                throw new FileNotFoundException(name);
+            }
+            return lines;
+        }
     }
 }

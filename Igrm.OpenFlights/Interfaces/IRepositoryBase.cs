@@ -9,6 +9,6 @@ namespace Igrm.OpenFlights.Interfaces
     public interface IRepositoryBase<T, U>
     {
         Task<T> FindAllAsync();
-        Task<T> FindByConditionAsync(Expression<Func<U, bool>> expression);
+        Task<T> FindByConditionAsync(Func<U, bool> expression);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Igrm.OpenFlights.Attributes;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text;
 
 namespace Igrm.OpenFlights.Models
@@ -43,6 +44,29 @@ namespace Igrm.OpenFlights.Models
         ///3-letter codes for plane type(s) generally used on this flight, separated by spaces
         ///</summary>
         public string Equipment { get; set; }
+
+        public static explicit operator Route(string[] array)
+        {
+            Route route = new Route();
+            int position = 0;
+
+            Type routeType = typeof(Route);
+
+            foreach (var item in array)
+            {
+                PropertyInfo pi = routeType.GetProperties()[position];
+                if (item != null)
+                {
+                    if (pi.PropertyType.Name == "Decimal")
+                        pi.SetValue(route, Convert.ToDecimal(item));
+                    else
+                        pi.SetValue(route, item);
+                }
+                position++;
+            }
+
+            return route;
+        }
     }
 
     [FileCache(CacheKey = "Routes", FileName = "routes.dat", Uri = "https://raw.githubusercontent.com/jpatokal/openflights/master/data/routes.dat")]

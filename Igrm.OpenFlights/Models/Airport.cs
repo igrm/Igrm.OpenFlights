@@ -1,6 +1,7 @@
 ﻿using Igrm.OpenFlights.Attributes;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text;
 
 namespace Igrm.OpenFlights.Models
@@ -64,6 +65,28 @@ namespace Igrm.OpenFlights.Models
         ///</summary>
         public string Source { get; set; }
 
+        public static explicit operator Airport(string[] array)
+        {
+            Airport airport = new Airport();
+            int position = 0;
+
+            Type airportType = typeof(Airport);
+
+            foreach (var item in array)
+            {
+                PropertyInfo pi = airportType.GetProperties()[position];
+                if (item != null)
+                {
+                    if (pi.PropertyType.Name == "Decimal")
+                        pi.SetValue(airport, Convert.ToDecimal(item));
+                    else
+                        pi.SetValue(airport, item);
+                }
+                position++;
+            }
+
+            return airport;
+        }
     }
 
     [FileCache(CacheKey = "Airports", FileName = "airports.dat", Uri = "https://raw.githubusercontent.com/jpatokal/openflights/master/data/airports.dat")]
