@@ -17,29 +17,38 @@ namespace Igrm.OpenFlights.Tests.IntegrationTests.Facts
         [Fact]
         public void GetAllAircrafts()
         {
-            IOpenFlightsDataCache cache = new OpenFlightsDataCache(_httpClientFixture.HttpClient);
-            Assert.True(cache.GetAircraftsAsync().Result.Count > 0);
+            using (IOpenFlightsDataCache cache = new OpenFlightsDataCache(_httpClientFixture.HttpClient))
+            {
+                Assert.True(cache.GetAircraftsAsync().Result.Count > 0);
+            }
+                
         }
 
         [Fact]
         public void GetAllRoutes()
         {
-            IOpenFlightsDataCache cache = new OpenFlightsDataCache(_httpClientFixture.HttpClient);
-            Assert.True(cache.GetRoutesAsync().Result.Count>0);
+            using (IOpenFlightsDataCache cache = new OpenFlightsDataCache(_httpClientFixture.HttpClient))
+            {
+                Assert.True(cache.GetRoutesAsync().Result.Count > 0);
+            }
         }
 
         [Fact]
         public void GetAllAirports()
         {
-            IOpenFlightsDataCache cache = new OpenFlightsDataCache(_httpClientFixture.HttpClient);
-            Assert.True(cache.GetAirportsAsync().Result.Count>0);
+            using (IOpenFlightsDataCache cache = new OpenFlightsDataCache(_httpClientFixture.HttpClient))
+            {
+                Assert.True(cache.GetAirportsAsync().Result.Count > 0);
+            }
         }
 
         [Fact]
         public void GetAllAirlines()
         {
-            IOpenFlightsDataCache cache = new OpenFlightsDataCache(_httpClientFixture.HttpClient);
-            Assert.True(cache.GetAirlinesAsync().Result.Count > 0);
+            using (IOpenFlightsDataCache cache = new OpenFlightsDataCache(_httpClientFixture.HttpClient))
+            {
+                Assert.True(cache.GetAirlinesAsync().Result.Count > 0);
+            }
         }
     }
 }

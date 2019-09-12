@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Igrm.OpenFlights
 {
-    public interface IOpenFlightsDataCache
+    public interface IOpenFlightsDataCache : IDisposable
     {
         Task<AircraftsList> GetAircraftsAsync();
         Task<AircraftsList> GetAircraftsAsync(Func<Aircraft,bool> expression);

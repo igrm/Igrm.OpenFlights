@@ -66,5 +66,13 @@ namespace Igrm.OpenFlights
         {
             return await _routeRepository.FindByConditionAsync(expression);
         }
+
+        public void Dispose()
+        {
+            _routeRepository.Dispose();
+            _aircraftRepository.Dispose();
+            _airportRepository.Dispose();
+            _airlineRepository.Dispose();
+        }
     }
 }

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Igrm.OpenFlights.Interfaces
 {
-    public interface ICache<T>
+    public interface ICache<T>:IDisposable
     {
         Task<T> GetAsync();
         Task SetAsync(T value);

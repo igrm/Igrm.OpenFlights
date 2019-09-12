@@ -44,5 +44,10 @@ namespace Igrm.OpenFlights.Implementations
         {
             return list.Select(x => x as U).ToList();
         }
+
+        public void Dispose()
+        {
+            _cache.Dispose();
+        }
     }
 }
