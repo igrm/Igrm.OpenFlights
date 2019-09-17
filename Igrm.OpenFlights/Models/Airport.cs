@@ -11,7 +11,7 @@ namespace Igrm.OpenFlights.Models
         ///<summary>
         ///Unique OpenFlights identifier for this airport.
         ///</summary>
-        public uint AirportId { get; set; }
+        public int AirportId { get; set; }
         ///<summary>
         ///Name of airport. May or may not contain the City name.
         ///</summary>
@@ -64,29 +64,6 @@ namespace Igrm.OpenFlights.Models
         ///Source of this data. OurAirports for data sourced from OurAirports, Legacy for old data not matched to OurAirports (mostly DAFIF), User for unverified user contributions. In airports.csv, only source=OurAirports is included.
         ///</summary>
         public string Source { get; set; }
-
-        public static explicit operator Airport(string[] array)
-        {
-            Airport airport = new Airport();
-            int position = 0;
-
-            Type airportType = typeof(Airport);
-
-            foreach (var item in array)
-            {
-                PropertyInfo pi = airportType.GetProperties()[position];
-                if (item != null)
-                {
-                    if (pi.PropertyType.Name == "Decimal")
-                        pi.SetValue(airport, Convert.ToDecimal(item));
-                    else
-                        pi.SetValue(airport, item);
-                }
-                position++;
-            }
-
-            return airport;
-        }
     }
 
     [FileCache(CacheKey = "Airports", FileName = "airports.dat", Uri = "https://raw.githubusercontent.com/jpatokal/openflights/master/data/airports.dat")]

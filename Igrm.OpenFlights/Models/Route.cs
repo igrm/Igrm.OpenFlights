@@ -15,7 +15,7 @@ namespace Igrm.OpenFlights.Models
         ///<summary>
         ///Unique OpenFlights identifier for airline (see Airline).
         ///</summary>
-        public uint AirlineId { get; set; }
+        public int AirlineId { get; set; }
         ///<summary>
         ///3-letter (IATA) or 4-letter (ICAO) code of the source airport.
         ///</summary>
@@ -23,7 +23,7 @@ namespace Igrm.OpenFlights.Models
         ///<summary>
         ///Unique OpenFlights identifier for source airport (see Airport)
         ///</summary>
-        public uint SourceAirportId { get; set; }
+        public int SourceAirportId { get; set; }
         ///<summary>
         ///3-letter (IATA) or 4-letter (ICAO) code of the destination airport.
         ///</summary>
@@ -31,7 +31,7 @@ namespace Igrm.OpenFlights.Models
         ///<summary>
         ///Unique OpenFlights identifier for destination airport (see Airport)
         ///</summary>
-        public uint DestinationAirportId { get; set; }
+        public int DestinationAirportId { get; set; }
         ///<summary>
         ///Y if this flight is a codeshare (that is, not operated by Airline, but another carrier), empty otherwise.
         ///</summary>
@@ -44,29 +44,6 @@ namespace Igrm.OpenFlights.Models
         ///3-letter codes for plane type(s) generally used on this flight, separated by spaces
         ///</summary>
         public string Equipment { get; set; }
-
-        public static explicit operator Route(string[] array)
-        {
-            Route route = new Route();
-            int position = 0;
-
-            Type routeType = typeof(Route);
-
-            foreach (var item in array)
-            {
-                PropertyInfo pi = routeType.GetProperties()[position];
-                if (item != null)
-                {
-                    if (pi.PropertyType.Name == "Decimal")
-                        pi.SetValue(route, Convert.ToDecimal(item));
-                    else
-                        pi.SetValue(route, item);
-                }
-                position++;
-            }
-
-            return route;
-        }
     }
 
     [FileCache(CacheKey = "Routes", FileName = "routes.dat", Uri = "https://raw.githubusercontent.com/jpatokal/openflights/master/data/routes.dat")]

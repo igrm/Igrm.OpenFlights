@@ -8,5 +8,7 @@ namespace Igrm.OpenFlights.Constants
     {
         public const string TEMP_DIRECTORY_NAME = "OpenFlightsCache";
         public const int EXPIRY_MINUTES = 360;
+        public const string EMPTY = "\\N";
+        public const string DELIMETER = ",";
     }
 }

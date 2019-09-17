@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace Igrm.OpenFlights.Implementations
 {
-    public class RepositoryBase<T, U> : IRepositoryBase<T, U> where T: List<U>, new() where U: class 
+    public class RepositoryBase<T, U> : IRepositoryBase<T, U> where T: List<U>, new() where U: class, new()
     {
         private readonly ICache<T> _cache;
         private readonly IDataFileLoader _dataFileLoader;
@@ -42,7 +42,7 @@ namespace Igrm.OpenFlights.Implementations
 
         private List<U> Convert(List<string[]> list)
         {
-            return list.Select(x => x as U).ToList();
+            return list.Select(x => GeneralHelper.Create<U>(x)).ToList();
         }
 
         public void Dispose()

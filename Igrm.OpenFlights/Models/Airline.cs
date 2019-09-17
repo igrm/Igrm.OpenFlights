@@ -11,7 +11,7 @@ namespace Igrm.OpenFlights.Models
         ///<summary>
         ///Unique OpenFlights identifier for this airline.
         ///</summary>
-        public uint AirlineId { get; set; }
+        public int AirlineId { get; set; }
         ///<summary>
         ///Name of the airline.
         ///</summary>
@@ -40,29 +40,6 @@ namespace Igrm.OpenFlights.Models
         ///Y if the airline is or has until recently been operational, N if it is defunct. This field is not reliable: in particular, major airlines that stopped flying long ago, but have not had their IATA code reassigned (eg. Ansett/AN), will incorrectly show as Y.
         ///</summary>
         public string Active { get; set; }
-
-        public static explicit operator Airline(string[] array)
-        {
-            Airline airline = new Airline();
-            int position = 0;
-
-            Type airlineType = typeof(Airline);
-
-            foreach (var item in array)
-            {
-                PropertyInfo pi = airlineType.GetProperties()[position];
-                if (item != null)
-                {
-                    if (pi.PropertyType.Name == "Decimal")
-                        pi.SetValue(airline, Convert.ToDecimal(item));
-                    else
-                        pi.SetValue(airline, item);
-                }
-                position++;
-            }
-
-            return airline;
-        }
 
     }
 

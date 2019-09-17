@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Xunit;
+using System.Linq;
 
 namespace Igrm.OpenFlights.Tests.IntegrationTests.Facts
 {
@@ -19,7 +20,7 @@ namespace Igrm.OpenFlights.Tests.IntegrationTests.Facts
         {
             using (IOpenFlightsDataCache cache = new OpenFlightsDataCache(_httpClientFixture.HttpClient))
             {
-                Assert.True(cache.GetAircraftsAsync().Result.Count > 0);
+                Assert.True(cache.GetAircraftsAsync().Result.Where(x=>!String.IsNullOrEmpty(x.Name)).Count() > 0);
             }
                 
         }
@@ -29,7 +30,7 @@ namespace Igrm.OpenFlights.Tests.IntegrationTests.Facts
         {
             using (IOpenFlightsDataCache cache = new OpenFlightsDataCache(_httpClientFixture.HttpClient))
             {
-                Assert.True(cache.GetRoutesAsync().Result.Count > 0);
+                Assert.True(cache.GetRoutesAsync().Result.Where(x => !String.IsNullOrEmpty(x.SourceAirport)).Count() > 0);
             }
         }
 
@@ -38,7 +39,7 @@ namespace Igrm.OpenFlights.Tests.IntegrationTests.Facts
         {
             using (IOpenFlightsDataCache cache = new OpenFlightsDataCache(_httpClientFixture.HttpClient))
             {
-                Assert.True(cache.GetAirportsAsync().Result.Count > 0);
+                Assert.True(cache.GetAirportsAsync().Result.Where(x => !String.IsNullOrEmpty(x.Name)).Count() > 0);
             }
         }
 
@@ -47,7 +48,7 @@ namespace Igrm.OpenFlights.Tests.IntegrationTests.Facts
         {
             using (IOpenFlightsDataCache cache = new OpenFlightsDataCache(_httpClientFixture.HttpClient))
             {
-                Assert.True(cache.GetAirlinesAsync().Result.Count > 0);
+                Assert.True(cache.GetAirlinesAsync().Result.Where(x => !String.IsNullOrEmpty(x.Name)).Count() > 0);
             }
         }
     }

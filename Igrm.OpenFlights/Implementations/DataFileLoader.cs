@@ -12,6 +12,8 @@ using System.Linq;
 using Igrm.OpenFlights.Exceptions;
 using Igrm.OpenFlights.Models;
 using Igrm.OpenFlights.Helpers;
+using System.Text.RegularExpressions;
+using CsvHelper;
 
 namespace Igrm.OpenFlights.Implementations
 {
@@ -73,10 +75,19 @@ namespace Igrm.OpenFlights.Implementations
         public List<string[]> ReadFile(string name)
         {
             List<string[]> lines = new List<string[]>();
-
+           
             if (FileExists(name))
             {
-                lines = File.ReadAllLines($@"{_tempPath}\{OpenFligthsConstants.TEMP_DIRECTORY_NAME}\{name}").Select(x => x.Split(',')).ToList();
+                using (TextReader reader = File.OpenText($@"{_tempPath}\{OpenFligthsConstants.TEMP_DIRECTORY_NAME}\{name}"))
+                {
+                    CsvReader csv = new CsvReader(reader);
+                    csv.Configuration.Delimiter = OpenFligthsConstants.DELIMETER;
+                    csv.Configuration.HasHeaderRecord = false;
+                    while (csv.Read())
+                    {
+                        lines.Add(csv.Context.Record);
+                    }
+                }
             }
             else
             {
