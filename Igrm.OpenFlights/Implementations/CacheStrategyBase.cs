@@ -12,7 +12,7 @@ namespace Igrm.OpenFlights.Implementations
         protected readonly IMemoryCache _memoryCache;
         protected readonly MemoryCacheEntryOptions _memoryCacheEntryOptions;
 
-        public CacheStrategyBase(IMemoryCache  memoryCache, MemoryCacheEntryOptions memoryCacheEntryOptions)
+        public CacheStrategyBase(IMemoryCache memoryCache, MemoryCacheEntryOptions memoryCacheEntryOptions)
         {
             _memoryCache = memoryCache;
             _memoryCacheEntryOptions = memoryCacheEntryOptions;

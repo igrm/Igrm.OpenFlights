@@ -17,20 +17,20 @@ namespace Igrm.OpenFlights
     /// </summary>
     public class OpenFlightsDataCache : IOpenFlightsDataCache
     {
-        private readonly IRepositoryBase<AirportsList, Airport> _airportRepository;
-        private readonly IRepositoryBase<AircraftsList, Aircraft> _aircraftRepository;
-        private readonly IRepositoryBase<RoutesList, Route> _routeRepository;
-        private readonly IRepositoryBase<AirlineList, Airline> _airlineRepository;
+        private readonly IAirportRepository _airportRepository;
+        private readonly IAircraftRepository _aircraftRepository;
+        private readonly IRouteRepository _routeRepository;
+        private readonly IAirlineRepository _airlineRepository;
+        private bool _disposedValue;
 
         public OpenFlightsDataCache(HttpClient httpClient)
         {
-            IDataFileLoader dataFileLoader = new DataFileLoader(httpClient);
-            Task t = dataFileLoader.LoadAllFilesAsync();
-            _airportRepository = new RepositoryBase<AirportsList, Airport>(dataFileLoader);
-            _aircraftRepository = new RepositoryBase<AircraftsList, Aircraft>(dataFileLoader);
-            _routeRepository = new RepositoryBase<RoutesList, Route>(dataFileLoader);
-            _airlineRepository = new RepositoryBase<AirlineList, Airline>(dataFileLoader);
-            t.Wait();
+            IDataAccessFactory factory = new DataAccessFactory(httpClient);
+
+            _airportRepository = factory.CreateAirportRepository();
+            _aircraftRepository = factory.CreateAircraftRepository();
+            _routeRepository = factory.CreateRouteRepository();
+            _airlineRepository = factory.CreateAirlineRepository();
         }
 
         /// <summary>
@@ -101,12 +101,26 @@ namespace Igrm.OpenFlights
             return await _routeRepository.FindByConditionAsync(expression);
         }
 
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!_disposedValue)
+            {
+                if (disposing)
+                {
+                    _airportRepository.Dispose();
+                    _aircraftRepository.Dispose();
+                    _routeRepository.Dispose();
+                    _airlineRepository.Dispose();
+                }
+                _disposedValue = true;
+            }
+        }
+
+
         public void Dispose()
         {
-            _routeRepository.Dispose();
-            _aircraftRepository.Dispose();
-            _airportRepository.Dispose();
-            _airlineRepository.Dispose();
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
     }
 }

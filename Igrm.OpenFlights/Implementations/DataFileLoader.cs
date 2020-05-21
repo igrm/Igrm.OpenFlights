@@ -67,12 +67,15 @@ namespace Igrm.OpenFlights.Implementations
             else
             {
                 var result = await _httpClient.GetAsync(attributes.uri);
-                File.WriteAllText($@"{_tempPath}\{OpenFligthsConstants.TEMP_DIRECTORY_NAME}\{attributes.fileName}",await result.Content.ReadAsStringAsync());
+                using (StreamWriter writer = File.CreateText($@"{_tempPath}\{OpenFligthsConstants.TEMP_DIRECTORY_NAME}\{attributes.fileName}"))
+                {
+                    await writer.WriteLineAsync(await result.Content.ReadAsStringAsync());
+                }
             }
 
         }
 
-        public List<string[]> ReadFile(string name)
+        public async Task<List<string[]>> ReadFileAsync(string name)
         {
             List<string[]> lines = new List<string[]>();
            
@@ -83,7 +86,7 @@ namespace Igrm.OpenFlights.Implementations
                     CsvReader csv = new CsvReader(reader);
                     csv.Configuration.Delimiter = OpenFligthsConstants.DELIMETER;
                     csv.Configuration.HasHeaderRecord = false;
-                    while (csv.Read())
+                    while (await csv.ReadAsync())
                     {
                         lines.Add(csv.Context.Record);
                     }

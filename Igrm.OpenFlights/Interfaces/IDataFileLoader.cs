@@ -10,6 +10,6 @@ namespace Igrm.OpenFlights.Interfaces
         bool FileExists(string name);
         Task LoadFileAsync<T>(bool overwrite=false);
         Task LoadAllFilesAsync(bool overwrite = false);
-        List<string[]> ReadFile(string name);
+        Task<List<string[]>> ReadFileAsync(string name);
     }
 }

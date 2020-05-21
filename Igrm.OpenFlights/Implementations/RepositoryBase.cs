@@ -26,7 +26,7 @@ namespace Igrm.OpenFlights.Implementations
             T result = await _cache.GetAsync();
             if(result == null)
             {
-                var list = _dataFileLoader.ReadFile(GeneralHelper.GetAttributeData<T>().fileName);
+                var list = await _dataFileLoader.ReadFileAsync(GeneralHelper.GetAttributeData<T>().fileName);
                 result = new T();
                 result.AddRange(Convert(list));
                 await _cache.SetAsync(result);
