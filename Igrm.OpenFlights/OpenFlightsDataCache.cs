@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Igrm.OpenFlights.Helpers;
 using Igrm.OpenFlights.Implementations;
 using Igrm.OpenFlights.Interfaces;
 using Igrm.OpenFlights.Models;
+using Microsoft.Extensions.Caching.Memory;
+using System;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace Igrm.OpenFlights
 {
@@ -21,16 +21,34 @@ namespace Igrm.OpenFlights
         private readonly IAircraftRepository _aircraftRepository;
         private readonly IRouteRepository _routeRepository;
         private readonly IAirlineRepository _airlineRepository;
-        private bool _disposedValue;
 
-        public OpenFlightsDataCache(HttpClient httpClient)
+        private IMemoryCache _memoryCache;
+        private HttpClient _httpClient;
+
+        private readonly DisposeModeEnum _disposeMode;
+        private bool disposedValue;
+
+        public OpenFlightsDataCache(HttpClient httpClient, IMemoryCache memoryCache)
         {
-            IDataAccessFactory factory = new DataAccessFactory(httpClient);
+            _memoryCache = memoryCache;
+            _httpClient = httpClient;
+            _disposeMode = DisposeModeEnum.DoNothing;
 
+            IDataAccessFactory factory = new DataAccessFactory(_httpClient, _memoryCache);
             _airportRepository = factory.CreateAirportRepository();
             _aircraftRepository = factory.CreateAircraftRepository();
             _routeRepository = factory.CreateRouteRepository();
             _airlineRepository = factory.CreateAirlineRepository();
+        }
+
+        public OpenFlightsDataCache(HttpClient httpClient): this(httpClient, new MemoryCache(new MemoryCacheOptions()))
+        {
+            _disposeMode = DisposeModeEnum.DisposeMemoryCache;    
+        }
+
+        public OpenFlightsDataCache(): this(new HttpClient(), new MemoryCache(new MemoryCacheOptions()))
+        {
+            _disposeMode = DisposeModeEnum.DisposeHttpClientAndMemoryCache;
         }
 
         /// <summary>
@@ -103,21 +121,21 @@ namespace Igrm.OpenFlights
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!_disposedValue)
+            if (!disposedValue)
             {
                 if (disposing)
                 {
-                    _airportRepository.Dispose();
-                    _aircraftRepository.Dispose();
-                    _routeRepository.Dispose();
-                    _airlineRepository.Dispose();
+
                 }
-                _disposedValue = true;
+                
+                _httpClient = null;
+                _memoryCache = null;
+
+                disposedValue = true;
             }
         }
 
-
-        public void Dispose()
+       public void Dispose()
         {
             Dispose(disposing: true);
             GC.SuppressFinalize(this);

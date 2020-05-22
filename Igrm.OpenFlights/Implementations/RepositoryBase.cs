@@ -7,6 +7,7 @@ using Igrm.OpenFlights.Constants;
 using Igrm.OpenFlights.Helpers;
 using Igrm.OpenFlights.Interfaces;
 using System.Linq;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace Igrm.OpenFlights.Implementations
 {
@@ -15,9 +16,9 @@ namespace Igrm.OpenFlights.Implementations
         private readonly ICache<T> _cache;
         private readonly IDataFileLoader _dataFileLoader;
 
-        public RepositoryBase(IDataFileLoader dataFileLoader)
+        public RepositoryBase(IDataFileLoader dataFileLoader, IMemoryCache memoryCache)
         {
-            _cache = new CacheBase<T>(new MemoryCacheStrategy<T>(OpenFligthsConstants.EXPIRY_MINUTES, dataFileLoader));
+            _cache = new CacheBase<T>(new MemoryCacheStrategy<T>(OpenFligthsConstants.EXPIRY_MINUTES, dataFileLoader, memoryCache));
             _dataFileLoader = dataFileLoader;
         }
 
@@ -43,11 +44,6 @@ namespace Igrm.OpenFlights.Implementations
         private List<U> Convert(List<string[]> list)
         {
             return list.Select(x => GeneralHelper.Create<U>(x)).ToList();
-        }
-
-        public void Dispose()
-        {
-            _cache.Dispose();
         }
     }
 }

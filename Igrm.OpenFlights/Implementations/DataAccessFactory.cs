@@ -1,4 +1,5 @@
 ﻿using Igrm.OpenFlights.Interfaces;
+using Microsoft.Extensions.Caching.Memory;
 using System.Net.Http;
 
 namespace Igrm.OpenFlights.Implementations
@@ -6,31 +7,33 @@ namespace Igrm.OpenFlights.Implementations
     public class DataAccessFactory : IDataAccessFactory
     {
         private IDataFileLoader _dataFileLoader;
+        private IMemoryCache _memoryCache;
 
-        public DataAccessFactory(HttpClient httpClient)
+        public DataAccessFactory(HttpClient httpClient, IMemoryCache memoryCache)
         {
+            _memoryCache = memoryCache;
             _dataFileLoader = new DataFileLoader(httpClient);
             _dataFileLoader.LoadAllFilesAsync().Wait();
 
         }
         public IAircraftRepository CreateAircraftRepository()
         {
-            return new AircraftRepository(_dataFileLoader);
+            return new AircraftRepository(_dataFileLoader, _memoryCache);
         }
 
         public IAirlineRepository CreateAirlineRepository()
         {
-            return new AirlineRepository(_dataFileLoader);
+            return new AirlineRepository(_dataFileLoader, _memoryCache);
         }
 
         public IAirportRepository CreateAirportRepository()
         {
-            return new AirportRepository(_dataFileLoader);
+            return new AirportRepository(_dataFileLoader, _memoryCache);
         }
 
         public IRouteRepository CreateRouteRepository()
         {
-            return new RouteRepository(_dataFileLoader);
+            return new RouteRepository(_dataFileLoader, _memoryCache);
         }
     }
 }

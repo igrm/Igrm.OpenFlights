@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Igrm.OpenFlights.Interfaces
 {
-    public interface IRepositoryBase<T, U>:IDisposable
+    public interface IRepositoryBase<T, U>
     {
         Task<T> FindAllAsync();
         Task<T> FindByConditionAsync(Func<U, bool> expression);

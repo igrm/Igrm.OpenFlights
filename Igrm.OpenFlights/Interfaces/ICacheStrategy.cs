@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Igrm.OpenFlights.Interfaces
 {
-    public interface ICacheStrategy<T>: IDisposable
+    public interface ICacheStrategy<T>
     {
         Task<T> ExecuteGetAsync(string key);
         Task ExecuteSetAsyn(T value, string key);

@@ -15,7 +15,7 @@ namespace Igrm.OpenFlights.Implementations
         {
         }
 
-        public MemoryCacheStrategy(int cacheExpirationMinutes, IDataFileLoader dataFileLoader):this(new MemoryCache(new MemoryCacheOptions()),new MemoryCacheEntryOptions())
+        public MemoryCacheStrategy(int cacheExpirationMinutes, IDataFileLoader dataFileLoader, IMemoryCache memoryCache) :this(memoryCache,new MemoryCacheEntryOptions())
         {
             _memoryCacheEntryOptions.AbsoluteExpirationRelativeToNow = new TimeSpan(hours:0,minutes: cacheExpirationMinutes, seconds:0);
             _dataFileLoader = dataFileLoader;

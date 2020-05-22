@@ -5,17 +5,12 @@ using Igrm.OpenFlights.Interfaces;
 
 namespace Igrm.OpenFlights.Implementations
 {
-    public class CacheBase<T> : IDisposable, ICache<T>
+    public class CacheBase<T> : ICache<T>
     {
         private readonly ICacheStrategy<T> _cacheStrategy;
         public CacheBase(ICacheStrategy<T> cacheStrategy)
         {
             _cacheStrategy = cacheStrategy;
-        }
-
-        public void Dispose()
-        {
-            _cacheStrategy.Dispose();
         }
 
         public Task<T> GetAsync()

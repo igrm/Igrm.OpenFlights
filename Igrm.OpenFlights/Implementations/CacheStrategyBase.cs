@@ -18,11 +18,6 @@ namespace Igrm.OpenFlights.Implementations
             _memoryCacheEntryOptions = memoryCacheEntryOptions;
         }
 
-        public void Dispose()
-        {
-            _memoryCache.Dispose();
-        }
-
         public Task<T> ExecuteGetAsync(string key)
         {
             return Task.Run(() => _memoryCache.Get(key) as T);
