@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Igrm.OpenFlights.Attributes
 {
     [AttributeUsage(AttributeTargets.Class)]
-    public class FileCacheAttribute : Attribute
+    public sealed class FileCacheAttribute : Attribute
     {
         private string _fileName;
         private string _uri;
@@ -18,6 +16,9 @@ namespace Igrm.OpenFlights.Attributes
 
         public FileCacheAttribute()
         {
+            _fileName = String.Empty;
+            _uri = String.Empty;
+            _cacheKey = String.Empty;
         }
     }
 }

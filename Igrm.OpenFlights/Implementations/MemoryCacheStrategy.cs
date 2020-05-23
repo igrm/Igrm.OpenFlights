@@ -8,8 +8,8 @@ namespace Igrm.OpenFlights.Implementations
 {
     public class MemoryCacheStrategy<T> : CacheStrategyBase<T> where T : class
     {
-        private readonly PostEvictionDelegate _postEvictionDelegate;
-        private readonly IDataFileLoader _dataFileLoader;
+        private readonly PostEvictionDelegate? _postEvictionDelegate;
+        private readonly IDataFileLoader? _dataFileLoader;
 
         public MemoryCacheStrategy(IMemoryCache memoryCache, MemoryCacheEntryOptions memoryCacheEntryOptions):base(memoryCache, memoryCacheEntryOptions)
         {

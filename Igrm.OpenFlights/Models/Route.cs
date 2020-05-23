@@ -1,13 +1,20 @@
 ﻿using Igrm.OpenFlights.Attributes;
 using System;
 using System.Collections.Generic;
-using System.Reflection;
-using System.Text;
 
 namespace Igrm.OpenFlights.Models
 {
     public class Route
     {
+        public Route()
+        {
+            Airline = String.Empty;
+            SourceAirport = String.Empty;
+            DestinationAirport = String.Empty;
+            CodeShare = String.Empty;
+            Stops = String.Empty;
+            Equipment = String.Empty;
+        }
         ///<summary>
         ///2-letter (IATA) or 3-letter (ICAO) code of the airline.
         ///</summary>

@@ -11,7 +11,7 @@ using Microsoft.Extensions.Caching.Memory;
 
 namespace Igrm.OpenFlights.Tests.UnitTests.Facts
 {
-    public class MemoryCacheStrategyFacts
+    public sealed class MemoryCacheStrategyFacts
     {
         public class PostEvictionDelegateTests
         {

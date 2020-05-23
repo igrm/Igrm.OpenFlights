@@ -1,24 +1,22 @@
 ﻿using Igrm.OpenFlights.Attributes;
 using Igrm.OpenFlights.Constants;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Globalization;
-using System.Text;
 
 namespace Igrm.OpenFlights.Helpers
 {
-    public class GeneralHelper
+    public sealed class GeneralHelper
     {
         public static (string cacheKey, string fileName, string uri) GetAttributeData<T>()
         {
             MemberInfo memberInfo = typeof(T);
-            FileCacheAttribute attribute = memberInfo.GetCustomAttributes(true)
-                                                      .Where(x => x.GetType() == typeof(FileCacheAttribute))
-                                                      .FirstOrDefault() as FileCacheAttribute;
-            if (attribute != null)
+            if (memberInfo.GetCustomAttributes(true)
+                          .Where(x => x.GetType() == typeof(FileCacheAttribute))
+                          .FirstOrDefault() is FileCacheAttribute attribute)
+            {
                 return (cacheKey: attribute.CacheKey, fileName: attribute.FileName, uri: attribute.Uri);
+            }
 
             return (cacheKey: String.Empty, fileName: String.Empty, uri: String.Empty);
         }
@@ -41,8 +39,7 @@ namespace Igrm.OpenFlights.Helpers
 
                     if (pi.PropertyType.Name == "Decimal")
                     {
-                        decimal d;
-                        if (!Decimal.TryParse(temp, out d))
+                        if (!Decimal.TryParse(temp, out decimal d))
                         {
                             throw new ArgumentException($"Invalid decimal format: {temp}");
                         }
@@ -50,8 +47,7 @@ namespace Igrm.OpenFlights.Helpers
                     }
                     else if (pi.PropertyType.Name == "Int32")
                     {
-                        int i;
-                        if(!Int32.TryParse(temp, out i))
+                        if(!Int32.TryParse(temp, out int i))
                         {
                             throw new ArgumentException($"Invalid integer format: {temp}");
                         }

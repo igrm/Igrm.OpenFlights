@@ -1,13 +1,17 @@
 ﻿using Igrm.OpenFlights.Attributes;
 using System;
 using System.Collections.Generic;
-using System.Reflection;
-using System.Text;
 
 namespace Igrm.OpenFlights.Models
 {
     public class Aircraft
     {
+        public Aircraft()
+        {
+            Name = String.Empty;
+            Iata = String.Empty;
+            Icao = String.Empty;
+        }
         /// <summary>
         /// Full name of the aircraft.
         /// </summary>

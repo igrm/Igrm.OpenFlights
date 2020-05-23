@@ -22,8 +22,8 @@ namespace Igrm.OpenFlights
         private readonly IRouteRepository _routeRepository;
         private readonly IAirlineRepository _airlineRepository;
 
-        private IMemoryCache _memoryCache;
-        private HttpClient _httpClient;
+        private readonly IMemoryCache _memoryCache;
+        private readonly HttpClient _httpClient;
 
         private readonly DisposeModeEnum _disposeMode;
         private bool disposedValue;
@@ -125,12 +125,21 @@ namespace Igrm.OpenFlights
             {
                 if (disposing)
                 {
-
+                    switch (_disposeMode)
+                    {
+                        case DisposeModeEnum.DisposeMemoryCache:
+                            _memoryCache.Dispose();
+                            break;
+                        case DisposeModeEnum.DisposeHttpClientAndMemoryCache:
+                            _memoryCache.Dispose();
+                            _httpClient.Dispose();
+                            break;
+                        case DisposeModeEnum.DoNothing:
+                            break;
+                        default: break;
+                    }
                 }
                 
-                _httpClient = null;
-                _memoryCache = null;
-
                 disposedValue = true;
             }
         }

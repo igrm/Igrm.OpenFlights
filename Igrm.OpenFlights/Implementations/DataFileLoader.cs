@@ -1,19 +1,14 @@
-﻿using Igrm.OpenFlights.Attributes;
+﻿using CsvHelper;
 using Igrm.OpenFlights.Constants;
+using Igrm.OpenFlights.Exceptions;
+using Igrm.OpenFlights.Helpers;
 using Igrm.OpenFlights.Interfaces;
+using Igrm.OpenFlights.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
-using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
-using System.Linq;
-using Igrm.OpenFlights.Exceptions;
-using Igrm.OpenFlights.Models;
-using Igrm.OpenFlights.Helpers;
-using System.Text.RegularExpressions;
-using CsvHelper;
 
 namespace Igrm.OpenFlights.Implementations
 {
@@ -53,21 +48,21 @@ namespace Igrm.OpenFlights.Implementations
 
         public async Task LoadFileAsync<T>(bool overwrite = false)
         {
-            var attributes = GeneralHelper.GetAttributeData<T>();
+            var (cacheKey, fileName, uri) = GeneralHelper.GetAttributeData<T>();
 
-            if (String.IsNullOrEmpty(attributes.fileName) && String.IsNullOrEmpty(attributes.uri) 
-                && !Uri.IsWellFormedUriString(attributes.uri, UriKind.Absolute))
+            if (String.IsNullOrEmpty(cacheKey) || String.IsNullOrEmpty(fileName) || String.IsNullOrEmpty(uri) 
+                || !Uri.IsWellFormedUriString(uri, UriKind.Absolute))
             {
                 throw new FileCacheAttributeNotProvidedException();
             }
-            else if (FileExists(attributes.fileName) && !overwrite)
+            else if (FileExists(fileName) && !overwrite)
             {
                 return;
             }
             else
             {
-                var result = await _httpClient.GetAsync(attributes.uri);
-                using (StreamWriter writer = File.CreateText($@"{_tempPath}\{OpenFligthsConstants.TEMP_DIRECTORY_NAME}\{attributes.fileName}"))
+                var result = await _httpClient.GetAsync(uri);
+                using (StreamWriter writer = File.CreateText($@"{_tempPath}\{OpenFligthsConstants.TEMP_DIRECTORY_NAME}\{fileName}"))
                 {
                     await writer.WriteLineAsync(await result.Content.ReadAsStringAsync());
                 }
@@ -83,12 +78,14 @@ namespace Igrm.OpenFlights.Implementations
             {
                 using (TextReader reader = File.OpenText($@"{_tempPath}\{OpenFligthsConstants.TEMP_DIRECTORY_NAME}\{name}"))
                 {
-                    CsvReader csv = new CsvReader(reader);
-                    csv.Configuration.Delimiter = OpenFligthsConstants.DELIMETER;
-                    csv.Configuration.HasHeaderRecord = false;
-                    while (await csv.ReadAsync())
+                    using (CsvReader csv = new CsvReader(reader))
                     {
-                        lines.Add(csv.Context.Record);
+                        csv.Configuration.Delimiter = OpenFligthsConstants.DELIMETER;
+                        csv.Configuration.HasHeaderRecord = false;
+                        while (await csv.ReadAsync())
+                        {
+                            lines.Add(csv.Context.Record);
+                        }
                     }
                 }
             }

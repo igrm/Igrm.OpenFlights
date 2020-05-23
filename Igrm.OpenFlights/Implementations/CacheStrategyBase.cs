@@ -1,8 +1,5 @@
 ﻿using Igrm.OpenFlights.Interfaces;
 using Microsoft.Extensions.Caching.Memory;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Igrm.OpenFlights.Implementations
@@ -20,7 +17,7 @@ namespace Igrm.OpenFlights.Implementations
 
         public Task<T> ExecuteGetAsync(string key)
         {
-            return Task.Run(() => _memoryCache.Get(key) as T);
+            return Task.Run(() => (T)_memoryCache.Get(key));
 
         }
 

@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
-using Igrm.OpenFlights.Constants;
+﻿using Igrm.OpenFlights.Constants;
 using Igrm.OpenFlights.Helpers;
 using Igrm.OpenFlights.Interfaces;
-using System.Linq;
 using Microsoft.Extensions.Caching.Memory;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Igrm.OpenFlights.Implementations
 {
@@ -38,7 +36,7 @@ namespace Igrm.OpenFlights.Implementations
         public async Task<T> FindByConditionAsync(Func<U, bool> expression)
         {
             T result = await FindAllAsync();
-            return result.Where(expression).ToList() as T;
+            return (T)result.Where(expression).ToList();
         }
 
         private List<U> Convert(List<string[]> list)

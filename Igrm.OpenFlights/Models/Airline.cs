@@ -1,13 +1,21 @@
 ﻿using Igrm.OpenFlights.Attributes;
 using System;
 using System.Collections.Generic;
-using System.Reflection;
-using System.Text;
 
 namespace Igrm.OpenFlights.Models
 {
     public class Airline
     {
+        public Airline()
+        {
+            Name = String.Empty;
+            Alias = String.Empty;
+            Iata = String.Empty;
+            Icao = String.Empty;
+            CallSign = String.Empty;
+            Country = String.Empty;
+            Active = String.Empty;
+        }
         ///<summary>
         ///Unique OpenFlights identifier for this airline.
         ///</summary>

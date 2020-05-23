@@ -1,13 +1,24 @@
 ﻿using Igrm.OpenFlights.Attributes;
 using System;
 using System.Collections.Generic;
-using System.Reflection;
-using System.Text;
 
 namespace Igrm.OpenFlights.Models
 {
     public class Airport
     {
+        public Airport()
+        {
+            Name = String.Empty;
+            City = String.Empty;
+            Country = String.Empty;
+            Iata = String.Empty;
+            Icao = String.Empty;
+            Dst = String.Empty;
+            TzDatabaseTimezone = String.Empty;
+            Type = String.Empty;
+            Source = String.Empty;
+
+        }
         ///<summary>
         ///Unique OpenFlights identifier for this airport.
         ///</summary>

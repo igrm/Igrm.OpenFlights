@@ -6,8 +6,8 @@ namespace Igrm.OpenFlights.Implementations
 {
     public class DataAccessFactory : IDataAccessFactory
     {
-        private IDataFileLoader _dataFileLoader;
-        private IMemoryCache _memoryCache;
+        private readonly IDataFileLoader _dataFileLoader;
+        private readonly IMemoryCache _memoryCache;
 
         public DataAccessFactory(HttpClient httpClient, IMemoryCache memoryCache)
         {
