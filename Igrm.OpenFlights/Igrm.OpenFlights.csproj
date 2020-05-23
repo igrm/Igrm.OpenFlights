@@ -13,10 +13,10 @@ Please refer to https://openflights.org/data.html for more details.</Description
     <PackageProjectUrl>https://github.com/igrm/Igrm.OpenFlights</PackageProjectUrl>
     <RepositoryType>GIT</RepositoryType>
     <RepositoryUrl>https://github.com/igrm/Igrm.OpenFlights.git</RepositoryUrl>
-    <PackageReleaseNotes>bugfixes, new CSV file load approach</PackageReleaseNotes>
-    <AssemblyVersion>1.1.0.0</AssemblyVersion>
-    <FileVersion>1.1.0.0</FileVersion>
-    <Version>1.1.0</Version>
+    <PackageReleaseNotes>performance improvements</PackageReleaseNotes>
+    <AssemblyVersion>1.2.0.0</AssemblyVersion>
+    <FileVersion>1.2.0.0</FileVersion>
+    <Version>1.2.0</Version>
       <LangVersion>latest</LangVersion>
       <Nullable>enable</Nullable>
       <NullableContextOptions>enable</NullableContextOptions>
